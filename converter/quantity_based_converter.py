@@ -61,23 +61,22 @@ class QuantityBasedConverter(Converter):
     def quantity(self):
         return self._quantity
 
-    def _is_unit_supported(self, unit):
-        assert isinstance(unit, QuantityUnit)
-        return unit in self.units
-
     # -----
 
     def supported_conversions(self):
         return self._supported_conversions
 
+    def is_unit_supported(self, unit):
+        return isinstance(unit, QuantityUnit) and unit in self.units
+
     def convert(self, source_unit, source_value, target_unit):
         assert isinstance(source_unit, QuantityUnit)
         assert isinstance(target_unit, QuantityUnit)
 
-        if not self._is_unit_supported(source_unit):
+        if not self.is_unit_supported(source_unit):
             raise Exception("Source unit is not supported [%s]" % source_unit)
 
-        if not self._is_unit_supported(target_unit):
+        if not self.is_unit_supported(target_unit):
             raise Exception("Target unit is not supported [%s]" % target_unit)
 
         if not (self.quantity() == source_unit.quantity() == target_unit.quantity()):

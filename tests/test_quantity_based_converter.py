@@ -1,5 +1,6 @@
-from converter.quantity_based_converter import QuantityBasedConverter, Quantity
+from converter.unit import Unit
 from converter.unit.quantityunit import QuantityUnit
+from converter.quantity_based_converter import QuantityBasedConverter, Quantity
 
 
 MOCK_TIME_QUANTITY = Quantity("MOCK_TIME_QUANTITY")
@@ -7,6 +8,9 @@ MOCK_TIME_QUANTITY = Quantity("MOCK_TIME_QUANTITY")
 UNIT_SEC = QuantityUnit('sec', 'seconds', MOCK_TIME_QUANTITY)
 UNIT_MIN = QuantityUnit('min', 'minutes', MOCK_TIME_QUANTITY)
 UNIT_HOUR = QuantityUnit('h', 'hour', MOCK_TIME_QUANTITY)
+
+UNIT_SIMPLE_UNIT = Unit('simp', 'simple unit')
+UNIT_IRRELEVANT = QuantityUnit('ir', 'irrelevant_unit', None)
 
 MOCK_UNITS = [
     UNIT_SEC,
@@ -56,6 +60,16 @@ def test_supported_conversions_2():
     assert UNIT_MIN not in supported_conversions[UNIT_MIN]
     assert UNIT_HOUR in supported_conversions[UNIT_MIN]
 
+
+def test_is_unit_supported():
+    converter = MockQuantityBasedConverter()
+
+    assert converter.is_unit_supported(UNIT_SEC)
+    assert converter.is_unit_supported(UNIT_MIN)
+    assert converter.is_unit_supported(UNIT_HOUR)
+
+    assert not converter.is_unit_supported(UNIT_SIMPLE_UNIT)
+    assert not converter.is_unit_supported(UNIT_IRRELEVANT)
 
 def test_convert():
     converter = MockQuantityBasedConverter()
