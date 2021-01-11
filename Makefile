@@ -6,4 +6,4 @@ install:
 	pip install --upgrade .
 
 test:
-	PYTHONPATH=. pytest
+	PYTHONPATH=. pytest --capture=tee-sys --show-capture=stdout

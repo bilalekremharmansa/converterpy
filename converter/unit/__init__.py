@@ -10,3 +10,5 @@ class Unit(object):
     def fullname(self):
         return self._fullname
 
+    def __repr__(self):
+        return 'Unit(%s, %s)' % (self.shortname(), self.fullname())

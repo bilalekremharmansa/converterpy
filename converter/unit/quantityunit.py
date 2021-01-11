@@ -10,3 +10,6 @@ class QuantityUnit(Unit):
     # time[seconds, minutes] # length[centimetre, meter]
     def quantity(self):
         return self._quantity
+
+    def __repr__(self):
+        return 'QuantityUnit(%s, %s, %s)' % (self.shortname(), self.fullname(), self.quantity())
