@@ -29,7 +29,7 @@ class ConverterTextAdapter(Converter):
 
         source_unit, target_unit = self._get_source_target_units(source_selector, target_selector)
 
-        if (source_unit is None) and (target_unit is None):
+        if (source_unit is None) or (target_unit is None):
             raise ConversionNotSupportedException(self, source_unit, target_unit)
 
         return self.realConverter.convert(source_unit, source_value, target_unit)
@@ -41,13 +41,13 @@ class ConverterTextAdapter(Converter):
 
         source_unit = ConverterTextAdapter._find_unit_by_selector(source_selector, supported_conversions.keys())
         if not source_unit:
-            # todo logger debug: source not supported
+            self.logger.warning("Source unit is not found with selector [%s]" % source_selector)
             return None, None
 
         target_unit = ConverterTextAdapter._find_unit_by_selector(target_selector, supported_conversions[source_unit])
 
         if not target_unit:
-            # todo logger debug: target not supported
+            self.logger.warning("Target unit is not found with selector [%s]" % target_selector)
             return None, None
 
         return source_unit, target_unit
