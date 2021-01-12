@@ -11,3 +11,8 @@ class Converter(object):
 
     def convert(self, source_unit, source_value, target_unit):
         raise NotImplementedError()
+
+    # ----
+
+    def __repr__(self):
+        return 'Converter{%s}' % self.name
