@@ -22,7 +22,8 @@ MOCK_UNITS = [
 class MockQuantityBasedConverter(QuantityBasedConverter):
 
     def __init__(self):
-        super(MockQuantityBasedConverter, self).__init__(MOCK_UNITS, UNIT_SEC, MOCK_TIME_QUANTITY)
+        super(MockQuantityBasedConverter, self).__init__('Mock Quantity Based Converter', MOCK_UNITS, UNIT_SEC,
+                                                         MOCK_TIME_QUANTITY)
 
         self.conversion_table = {
             UNIT_SEC: 1,

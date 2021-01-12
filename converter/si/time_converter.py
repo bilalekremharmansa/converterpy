@@ -18,7 +18,7 @@ SI_TIME_UNITS = [
 class SITimeConverter(QuantityBasedConverter):
 
     def __init__(self):
-        super(SITimeConverter, self).__init__(SI_TIME_UNITS, UNIT_SI_SECOND, QUANTITY_SI_TIME)
+        super(SITimeConverter, self).__init__('SI Time Converter', SI_TIME_UNITS, UNIT_SI_SECOND, QUANTITY_SI_TIME)
 
         self.conversion_table = {
             UNIT_SI_SECOND: 1,

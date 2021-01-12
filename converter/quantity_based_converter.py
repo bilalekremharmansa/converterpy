@@ -2,6 +2,7 @@ from converter.converter import Converter
 from converter.unit.quantityunit import QuantityUnit
 
 from converter.util.assertion import assert_list_is_instance
+from converter.exception import ConversionNotSupportedException
 
 
 class Quantity(object):
@@ -25,8 +26,8 @@ class QuantityBasedConverter(Converter):
 
     # ------
 
-    def __init__(self, units, base_unit, quantity):
-        super(QuantityBasedConverter, self).__init__()
+    def __init__(self, name, units, base_unit, quantity):
+        super(QuantityBasedConverter, self).__init__(name)
 
         assert isinstance(quantity, Quantity)
         assert isinstance(base_unit, QuantityUnit)
@@ -77,7 +78,7 @@ class QuantityBasedConverter(Converter):
         assert isinstance(target_unit, QuantityUnit)
 
         if not self.is_convertible(source_unit, target_unit):
-            raise Exception("Source unit [%s] is not convertible to target unit [%s]" % (source_unit, target_unit))
+            raise ConversionNotSupportedException(self, source_unit, target_unit)
 
         if not (self.quantity() == source_unit.quantity() == target_unit.quantity()):
             raise Exception("Source unit's [%s] or target unit's [%s] quantity are not matched with [%s]"
