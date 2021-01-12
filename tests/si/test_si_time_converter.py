@@ -40,19 +40,25 @@ def test_supported_conversions():
             assert unit in target_units, "unit should've been supported [%s]" % unit
 
 
-def test_is_unit_supported():
+def test_is_convertible():
     converter = SITimeConverter()
 
-    for si_unit in SI_TIME_UNITS:
-        assert converter.is_unit_supported(si_unit)
+    assert converter.is_convertible(UNIT_SI_SECOND, UNIT_SI_MINUTE)
+    assert converter.is_convertible(UNIT_SI_MINUTE, UNIT_SI_HOUR)
 
     # ---
 
-    notQuantityUnit = Unit('nqu', 'not quantity unit')
-    assert not converter.is_unit_supported(notQuantityUnit)
+    not_quantity_unit = Unit('nqu', 'not quantity unit')
+    assert not converter.is_convertible(UNIT_SI_SECOND, not_quantity_unit)
+    assert not converter.is_convertible(UNIT_SI_MINUTE, not_quantity_unit)
+    assert not converter.is_convertible(not_quantity_unit, UNIT_SI_SECOND)
+    assert not converter.is_convertible(not_quantity_unit, UNIT_SI_MINUTE)
 
-    notTimeUnit = QuantityUnit('ntu', 'not time unit', None)
-    assert not converter.is_unit_supported(notTimeUnit)
+    not_time_unit = QuantityUnit('ntu', 'not time unit', None)
+    assert not converter.is_convertible(UNIT_SI_SECOND, not_time_unit)
+    assert not converter.is_convertible(UNIT_SI_MINUTE, not_time_unit)
+    assert not converter.is_convertible(not_time_unit, UNIT_SI_SECOND)
+    assert not converter.is_convertible(not_time_unit, UNIT_SI_MINUTE)
 
 
 def test_seconds_to_seconds():
@@ -117,4 +123,3 @@ def test_hours_to_hours():
 
     assert converter.convert(UNIT_SI_HOUR, 1, UNIT_SI_HOUR) == 1
     assert converter.convert(UNIT_SI_HOUR, 20, UNIT_SI_HOUR) == 20
-

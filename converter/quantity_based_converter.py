@@ -19,7 +19,7 @@ class QuantityBasedConverter(Converter):
     def create_supported_conversion_dictionary(units):
         supported_conversions = dict()
         for unit in units:
-            supported_conversions[unit] = [u for u in units if u != unit]
+            supported_conversions[unit] = [u for u in units]
 
         return supported_conversions
 
@@ -66,18 +66,18 @@ class QuantityBasedConverter(Converter):
     def supported_conversions(self):
         return self._supported_conversions
 
-    def is_unit_supported(self, unit):
-        return isinstance(unit, QuantityUnit) and unit in self.units
+    def is_convertible(self, source_unit, target_unit):
+        isinstance(source_unit, QuantityUnit)
+        isinstance(target_unit, QuantityUnit)
+
+        return source_unit in self._supported_conversions and target_unit in self._supported_conversions[source_unit]
 
     def convert(self, source_unit, source_value, target_unit):
         assert isinstance(source_unit, QuantityUnit)
         assert isinstance(target_unit, QuantityUnit)
 
-        if not self.is_unit_supported(source_unit):
-            raise Exception("Source unit is not supported [%s]" % source_unit)
-
-        if not self.is_unit_supported(target_unit):
-            raise Exception("Target unit is not supported [%s]" % target_unit)
+        if not self.is_convertible(source_unit, target_unit):
+            raise Exception("Source unit [%s] is not convertible to target unit [%s]" % (source_unit, target_unit))
 
         if not (self.quantity() == source_unit.quantity() == target_unit.quantity()):
             raise Exception("Source unit's [%s] or target unit's [%s] quantity are not matched with [%s]"

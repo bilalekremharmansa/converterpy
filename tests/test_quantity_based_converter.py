@@ -57,19 +57,25 @@ def test_supported_conversions_2():
 
     supported_conversions = converter.supported_conversions()
     assert UNIT_SEC in supported_conversions[UNIT_MIN]
-    assert UNIT_MIN not in supported_conversions[UNIT_MIN]
+    assert UNIT_MIN in supported_conversions[UNIT_MIN]
     assert UNIT_HOUR in supported_conversions[UNIT_MIN]
 
 
-def test_is_unit_supported():
+def test_is_convertible():
     converter = MockQuantityBasedConverter()
 
-    assert converter.is_unit_supported(UNIT_SEC)
-    assert converter.is_unit_supported(UNIT_MIN)
-    assert converter.is_unit_supported(UNIT_HOUR)
+    assert converter.is_convertible(UNIT_SEC, UNIT_MIN)
+    assert converter.is_convertible(UNIT_SEC, UNIT_HOUR)
 
-    assert not converter.is_unit_supported(UNIT_SIMPLE_UNIT)
-    assert not converter.is_unit_supported(UNIT_IRRELEVANT)
+    assert converter.is_convertible(UNIT_MIN, UNIT_HOUR)
+    assert converter.is_convertible(UNIT_HOUR, UNIT_MIN)
+
+    assert not converter.is_convertible(UNIT_SEC, UNIT_IRRELEVANT)
+    assert not converter.is_convertible(UNIT_MIN, UNIT_IRRELEVANT)
+
+    assert not converter.is_convertible(UNIT_IRRELEVANT, UNIT_SEC)
+    assert not converter.is_convertible(UNIT_IRRELEVANT, UNIT_MIN)
+
 
 def test_convert():
     converter = MockQuantityBasedConverter()
