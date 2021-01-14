@@ -1,4 +1,4 @@
-from converter.si.time_converter import *
+from converter.converter.si.time_converter import *
 from converter.unit import Unit
 
 

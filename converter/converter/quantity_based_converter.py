@@ -57,6 +57,9 @@ class QuantityBasedConverter(Converter):
     def _conversion_table(self):
         raise NotImplementedError()
 
+    def map_source_value(self, source_value):
+        return source_value
+
     # -----
 
     def quantity(self):
@@ -85,6 +88,8 @@ class QuantityBasedConverter(Converter):
                             % (source_unit.fullname(), target_unit.fullname(), self.quantity()))
 
         # -----
+
+        source_value = self.map_source_value(source_value)
 
         conversion_table = self._conversion_table()
         base_unit_value = conversion_table[source_unit] * source_value

@@ -1,4 +1,4 @@
-from converter.quantity_based_converter import QuantityBasedConverter, Quantity
+from converter.converter.quantity_based_converter import QuantityBasedConverter, Quantity
 from converter.unit.quantityunit import QuantityUnit
 
 
