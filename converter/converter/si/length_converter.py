@@ -1,5 +1,6 @@
-from converter.converter.quantity_based_converter import QuantityBasedConverter, Quantity
+from converter.converter.quantity_based_converter import Quantity
 from converter.unit.quantityunit import QuantityUnit
+from converter.converter.si import SIBaseConverter
 
 
 QUANTITY_SI_LENGTH = Quantity("LENGTH")
@@ -17,7 +18,7 @@ SI_LENGTH_UNITS = [
 ]
 
 
-class SILengthConverter(QuantityBasedConverter):
+class SILengthConverter(SIBaseConverter):
 
     def __init__(self):
         super(SILengthConverter, self).__init__('SI Length Converter', SI_LENGTH_UNITS, UNIT_SI_METER,

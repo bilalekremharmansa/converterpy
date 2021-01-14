@@ -1,5 +1,6 @@
-from converter.converter.quantity_based_converter import QuantityBasedConverter, Quantity
+from converter.converter.quantity_based_converter import Quantity
 from converter.unit.quantityunit import QuantityUnit
+from converter.converter.si import SIBaseConverter
 
 
 QUANTITY_SI_TIME = Quantity("TIME")
@@ -15,7 +16,7 @@ SI_TIME_UNITS = [
 ]
 
 
-class SITimeConverter(QuantityBasedConverter):
+class SITimeConverter(SIBaseConverter):
 
     def __init__(self):
         super(SITimeConverter, self).__init__('SI Time Converter', SI_TIME_UNITS, UNIT_SI_SECOND, QUANTITY_SI_TIME)
