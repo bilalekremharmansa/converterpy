@@ -41,13 +41,13 @@ class ConverterTextAdapter(Converter):
 
         source_unit = ConverterTextAdapter._find_unit_by_selector(source_selector, supported_conversions.keys())
         if not source_unit:
-            self.logger.warning("Source unit is not found with selector [%s]" % source_selector)
+            self.logger.debug("[%s] Source unit is not found with selector [%s]" % (self.name, source_selector))
             return None, None
 
         target_unit = ConverterTextAdapter._find_unit_by_selector(target_selector, supported_conversions[source_unit])
 
         if not target_unit:
-            self.logger.warning("Target unit is not found with selector [%s]" % target_selector)
+            self.logger.debug("[%s] Target unit is not found with selector [%s]" % (self.name, target_selector))
             return None, None
 
         return source_unit, target_unit

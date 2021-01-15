@@ -7,3 +7,17 @@ class ConversionNotSupportedException(Exception):
 
 class UnexpectedResultException(Exception):
     pass
+
+
+class SuitableConverterNotFoundException(Exception):
+    pass
+
+
+class MultipleSuitableConverterException(Exception):
+    pass
+
+
+class LoggerNotFoundException(Exception):
+
+    def __init__(self, name):
+        super(LoggerNotFoundException, self).__init__('Logger [%s] not found or not created with LogManager' % name)

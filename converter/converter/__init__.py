@@ -1,11 +1,11 @@
-from converter.util import logger as util_logger
+from converter.util.logger import LogManager
 
 
 class Converter(object):
 
     def __init__(self, name):
         self.name = name
-        self.logger = util_logger.create_logger(name)
+        self.logger = LogManager.get_logger()
 
     def supported_conversions(self):
         raise NotImplementedError()
