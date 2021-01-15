@@ -1,23 +1,79 @@
 import logging
+import pathlib
+import json
 import sys
 
 from converterpy.adapter import ConverterTextAdapter
+from converterpy.converter import Converter
 from converterpy.cli import Cli
 
 from converterpy.exception import SuitableConverterNotFoundException, MultipleSuitableConverterException
+from converterpy.provider.builtin import BuiltinConverterProvider
+from converterpy.util.assertion import assert_list_is_instance
 from converterpy.util.logger import LogManager, LEVEL_OUT
+from converterpy.util.import__ import import_class
 
-from converterpy.converter.si.time_converter import SITimeConverter
-from converterpy.converter.si.length_converter import SILengthConverter
-from converterpy.converter.si.mass_converter import SIMassConverter
-from converterpy.converter.TimestampToDateConverter import TimestampToDateConverter
+
+class Config(object):
+
+    @staticmethod
+    def from_file(path='/etc/convertpy.json'):
+        logger = LogManager.get_logger()
+
+        configs = None
+        if pathlib.Path(path).exists():
+            logger.debug("reading config file [%s]" % path)
+            with open(path) as fd:
+                content = fd.read()
+                configs = json.loads(content)
+        else:
+            logger.warn("Config file not found [%s], using defaults" % path)
+
+        return Config(configs)
+
+    # ------
+
+    def __init__(self, configs=None, use_built_in_provider=True):
+        if configs is None:
+            configs = list()
+
+        assert isinstance(configs, list)
+        assert_list_is_instance(configs, dict)
+
+        self.provider_configs = configs
+        self.use_built_in_provider = use_built_in_provider
 
 
 class ConvertMain(object):
 
-    def __init__(self, logger, converters):
-        self.converters = [ConverterTextAdapter(converter) for converter in converters]
+    def __init__(self, logger, config):
+        self.config = config
         self.logger = logger
+
+        self.converters = []
+        self.init_providers(config.provider_configs)
+
+        if config.use_built_in_provider:
+            self.provide_converters(BuiltinConverterProvider())
+
+    def init_providers(self, provider_configs):
+        self.logger.debug("Found [%s] provider configs" % len(provider_configs))
+        for cfg in provider_configs:
+            clazz = import_class(**cfg)
+
+            provider = clazz()
+            self.provide_converters(provider)
+
+    def provide_converters(self, provider):
+        converters = provider.provide()
+
+        assert_list_is_instance(converters, Converter)
+
+        self.logger.debug("adding [%s] new converters" % len(converters))
+        return self.add_converters(converters)
+
+    def add_converters(self, converters):
+        self.converters.extend([ConverterTextAdapter(converter) for converter in converters])
 
     def find_suitable_converters_to_convert(self, source_selector, target_selector):
         assert isinstance(source_selector, str)
@@ -74,14 +130,8 @@ def main():
     target_selector = args['target']
 
     # ------
-
-    converters = [
-        SITimeConverter(),
-        SILengthConverter(),
-        SIMassConverter(),
-        TimestampToDateConverter(),
-    ]
-    result_value = ConvertMain(logger, converters).convert(source_selector, source_value, target_selector)
+    cfg = Config.from_file()
+    result_value = ConvertMain(logger, cfg).convert(source_selector, source_value, target_selector)
     logger.out(result_value)
 
 

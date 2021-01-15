@@ -1,7 +1,7 @@
 # TODO
 
-- integrate custom converters easily ? User might provide a path to search for classes which implements converters
-  like scan path, we need to scan .py files for certain paths for that..
+- README.md
+- write a docs/custom_converter.md
 - setup.py
 
 
