@@ -32,9 +32,8 @@ usage: convert <value> <source> to <target> [optional arguments]
                 raise SyntaxError("Unexpected optional argument [%s]" % param)
 
         if len(params) == 0:
-            pass
+            args['help'] = True
         elif len(params) < 4:
-
             raise SyntaxError("Missing expression, see usage..")
         else:
             args['value'] = params[0]
