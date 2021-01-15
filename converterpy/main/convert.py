@@ -1,17 +1,16 @@
 import logging
 import sys
 
-from converter.adapter import ConverterTextAdapter
-from converter.cli import Cli
+from converterpy.adapter import ConverterTextAdapter
+from converterpy.cli import Cli
 
-from converter.exception import SuitableConverterNotFoundException, MultipleSuitableConverterException
-from converter.util.logger import LogManager, LEVEL_OUT
+from converterpy.exception import SuitableConverterNotFoundException, MultipleSuitableConverterException
+from converterpy.util.logger import LogManager, LEVEL_OUT
 
-# ---- built-in converters
-from converter.converter.si.time_converter import SITimeConverter
-from converter.converter.si.length_converter import SILengthConverter
-from converter.converter.si.mass_converter import SIMassConverter
-from converter.converter.TimestampToDateConverter import TimestampToDateConverter
+from converterpy.converter.si.time_converter import SITimeConverter
+from converterpy.converter.si.length_converter import SILengthConverter
+from converterpy.converter.si.mass_converter import SIMassConverter
+from converterpy.converter.TimestampToDateConverter import TimestampToDateConverter
 
 
 class ConvertMain(object):

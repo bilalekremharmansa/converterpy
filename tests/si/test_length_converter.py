@@ -1,5 +1,5 @@
-from converter.converter.si.length_converter import *
-from converter.unit import Unit
+from converterpy.converter.si.length_converter import *
+from converterpy.unit import Unit
 
 
 def test_init():

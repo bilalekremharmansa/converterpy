@@ -1,4 +1,4 @@
-from converter.adapter import ConverterTextAdapter
+from converterpy.adapter import ConverterTextAdapter
 from tests.helper import *
 
 

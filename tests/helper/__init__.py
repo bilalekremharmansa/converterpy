@@ -1,7 +1,7 @@
-from converter.converter import Converter
-from converter.unit import Unit
-from converter.unit.quantityunit import QuantityUnit
-from converter.converter.quantity_based_converter import QuantityBasedConverter, Quantity
+from converterpy.converter import Converter
+from converterpy.unit import Unit
+from converterpy.unit.quantityunit import QuantityUnit
+from converterpy.converter.quantity_based_converter import QuantityBasedConverter, Quantity
 
 
 MOCK_TIME_QUANTITY = Quantity("MOCK_TIME_QUANTITY")

@@ -1,5 +1,5 @@
-from converter.converter import Converter
-from converter.exception import ConversionNotSupportedException, UnexpectedResultException
+from converterpy.converter import Converter
+from converterpy.exception import ConversionNotSupportedException, UnexpectedResultException
 
 
 class ConverterTextAdapter(Converter):

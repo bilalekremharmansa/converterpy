@@ -1,4 +1,4 @@
-from converter.unit import Unit
+from converterpy.unit import Unit
 
 
 class QuantityUnit(Unit):

@@ -9,4 +9,4 @@ test:
 	PYTHONPATH=. pytest --capture=tee-sys --show-capture=stdout
 
 run:
-	@PYTHONPATH=. python converter/main/convert.py 60 seconds to minutes
+	@PYTHONPATH=. python converterpy/main/convert.py 60 seconds to minutes

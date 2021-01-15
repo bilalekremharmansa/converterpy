@@ -1,8 +1,8 @@
-from converter.converter import Converter
-from converter.unit.quantityunit import QuantityUnit
+from converterpy.converter import Converter
+from converterpy.unit.quantityunit import QuantityUnit
 
-from converter.util.assertion import assert_list_is_instance
-from converter.exception import ConversionNotSupportedException
+from converterpy.util.assertion import assert_list_is_instance
+from converterpy.exception import ConversionNotSupportedException
 
 
 class Quantity(object):

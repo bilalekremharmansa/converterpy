@@ -1,5 +1,5 @@
 # todo add to readme  ref: https://en.wikipedia.org/wiki/International_System_of_Units
-from converter.converter.quantity_based_converter import QuantityBasedConverter
+from converterpy.converter.quantity_based_converter import QuantityBasedConverter
 
 
 class SIBaseConverter(QuantityBasedConverter):

@@ -1,8 +1,8 @@
 import datetime
 
-from converter.converter import Converter
-from converter.exception import ConversionNotSupportedException
-from converter.unit import Unit
+from converterpy.converter import Converter
+from converterpy.exception import ConversionNotSupportedException
+from converterpy.unit import Unit
 
 UNIT_TIMESTAMP = Unit('ts', 'timestamp')
 UNIT_DATE = Unit('dt', 'date')

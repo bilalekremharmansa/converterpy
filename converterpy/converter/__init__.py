@@ -1,4 +1,4 @@
-from converter.util.logger import LogManager
+from converterpy.util.logger import LogManager
 
 
 class Converter(object):

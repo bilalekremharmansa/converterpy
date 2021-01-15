@@ -1,5 +1,5 @@
-from converter.main.convert import ConvertMain
-from converter.util.logger import LogManager
+from converterpy.main.convert import ConvertMain
+from converterpy.util.logger import LogManager
 from tests.helper import NumberConverter, MockQuantityBasedConverter
 
 

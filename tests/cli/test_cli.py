@@ -1,5 +1,5 @@
-from converter.util.logger import LogManager
-from converter.cli import Cli
+from converterpy.util.logger import LogManager
+from converterpy.cli import Cli
 
 logger = LogManager.get_logger()
 

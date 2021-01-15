@@ -1,6 +1,6 @@
-from converter.converter.quantity_based_converter import Quantity
-from converter.unit.quantityunit import QuantityUnit
-from converter.converter.si import SIBaseConverter
+from converterpy.converter.quantity_based_converter import Quantity
+from converterpy.unit.quantityunit import QuantityUnit
+from converterpy.converter.si import SIBaseConverter
 
 
 QUANTITY_SI_LENGTH = Quantity("LENGTH")

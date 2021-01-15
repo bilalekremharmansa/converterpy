@@ -1,6 +1,6 @@
 import logging
 
-from converter.exception import LoggerNotFoundException
+from converterpy.exception import LoggerNotFoundException
 
 LEVEL_OUT = 100
 logging.addLevelName(LEVEL_OUT, "OUT")
