@@ -1,8 +1,10 @@
-# todo add to readme  ref: https://en.wikipedia.org/wiki/International_System_of_Units
 from converterpy.converter.quantity_based_converter import QuantityBasedConverter
 
 
 class SIBaseConverter(QuantityBasedConverter):
+    """
+        ref: https://en.wikipedia.org/wiki/International_System_of_Units
+    """
 
     def __init__(self, name, units, base_unit, quantity):
         super(SIBaseConverter, self).__init__(name, units, base_unit, quantity)

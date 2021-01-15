@@ -5,7 +5,7 @@ class Cli(object):
 
     def usage(self):
         return """
-usage: convert.py <value> <source> to <target> [optional arguments]
+usage: convert <value> <source> to <target> [optional arguments]
 
     optional arguments:
     -h, --help          show help message
