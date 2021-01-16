@@ -26,7 +26,7 @@ There are some built-in converters to use;
 - SITimeConverter (converts the following units: seconds, minutes, hours)
 - SILengthConverter (converts the following units: millimeter, centimeter, meter, kilometer)
 - SIMassConverter (converts the following units: milligram, gram, kilogram)
-- TimestampToDateConverter (converts unix timetstamp to date format)
+- TimestampDateConverter (converts unix timestamp to date, date to timestamp format)
 
 ### Installation
 

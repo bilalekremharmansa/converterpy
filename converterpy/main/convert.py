@@ -27,7 +27,7 @@ class Config(object):
                 content = fd.read()
                 configs = json.loads(content)
         else:
-            logger.warn("Config file not found [%s], using defaults" % path)
+            logger.warning("Config file not found [%s], using defaults" % path)
 
         return Config(configs)
 

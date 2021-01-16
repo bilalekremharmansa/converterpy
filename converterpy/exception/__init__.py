@@ -21,3 +21,9 @@ class LoggerNotFoundException(Exception):
 
     def __init__(self, name):
         super(LoggerNotFoundException, self).__init__('Logger [%s] not found or not created with LogManager' % name)
+
+
+class SuitableDateFormatNotFoundException(Exception):
+
+    def __init__(self, date_str):
+        super(SuitableDateFormatNotFoundException, self).__init__('Suitable date format not found for [%s]' % date_str)
