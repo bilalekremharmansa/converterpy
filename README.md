@@ -12,13 +12,14 @@ usage: convert <value> <source> to <target> [optional arguments]
     -v                  verbose mode
 ```
 
-#### Example
+#### Examples
 
 ```bash
-
-$ convert 3600 seconds to minutes
-
-60
+$ convert 3600 seconds to minutes -> '60'
+$ convert 3600 sec to min -> '60'
+$ convert 2500 g to kg -> '2.5'
+$ convert 1610744400 ts to date -> '2021-01-16 00:00:00'
+$ convert 100 centimeter to meter -> '1'
 ```
 
 # Features
