@@ -40,7 +40,7 @@ $ pip install convertpy
 
 ### Custom Converters
 
-Please follow the instructions in custom converter [documentation.] [custom_converter.doc]
+Please follow the instructions in custom converter [documentation.][custom_converter.doc]
 
 
 License
@@ -48,4 +48,4 @@ License
 
 MIT
 
-[custom_converter.doc]: <docs/custom_converters.md>
+[custom_converter.doc]: <https://github.com/bilalekremharmansa/converterpy/blob/main/docs/custom_converters.md>
