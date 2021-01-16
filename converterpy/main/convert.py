@@ -69,7 +69,7 @@ class ConvertMain(object):
 
         assert_list_is_instance(converters, Converter)
 
-        self.logger.debug("adding [%s] new converters" % len(converters))
+        self.logger.debug("adding [%s] new converters [%s]" % (len(converters), converters))
         return self.add_converters(converters)
 
     def add_converters(self, converters):
