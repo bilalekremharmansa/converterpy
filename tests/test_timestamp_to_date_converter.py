@@ -1,4 +1,4 @@
-from converterpy.converter.TimestampToDateConverter import *
+from converterpy.converter.timestamp_date_converter import *
 
 
 def test_init():

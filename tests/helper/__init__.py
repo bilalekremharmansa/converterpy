@@ -53,9 +53,6 @@ class NumberConverter(Converter):
             UNIT_FLOAT: [UNIT_INT]
         }
 
-    def is_convertible(self, source_unit, target_unit):
-        return source_unit in self.supported_conversions() and target_unit in self.supported_conversions()[source_unit]
-
     def map_source_value(self, source_value):
         return source_value
 

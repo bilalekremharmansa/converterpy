@@ -3,7 +3,7 @@ from converterpy.provider import ConverterProvider
 from converterpy.converter.si.time_converter import SITimeConverter
 from converterpy.converter.si.length_converter import SILengthConverter
 from converterpy.converter.si.mass_converter import SIMassConverter
-from converterpy.converter.TimestampToDateConverter import TimestampToDateConverter
+from converterpy.converter.timestamp_date_converter import TimestampToDateConverter
 
 
 class BuiltinConverterProvider(ConverterProvider):

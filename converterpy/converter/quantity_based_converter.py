@@ -70,12 +70,6 @@ class QuantityBasedConverter(Converter):
     def supported_conversions(self):
         return self._supported_conversions
 
-    def is_convertible(self, source_unit, target_unit):
-        isinstance(source_unit, QuantityUnit)
-        isinstance(target_unit, QuantityUnit)
-
-        return source_unit in self._supported_conversions and target_unit in self._supported_conversions[source_unit]
-
     def convert(self, source_unit, source_value, target_unit):
         assert isinstance(source_unit, QuantityUnit)
         assert isinstance(target_unit, QuantityUnit)

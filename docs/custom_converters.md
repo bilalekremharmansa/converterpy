@@ -45,10 +45,6 @@ class NumberConverter(Converter):
             UNIT_FLOAT: [UNIT_INT]
         }
 
-    def is_convertible(self, source_unit, target_unit):
-        # is given source_unit convertible to target_unit ?
-        return source_unit in self.supported_conversions() and target_unit in self.supported_conversions()[source_unit]
-
     def convert(self, source_unit, source_value, target_unit):
         # since source_value is coming from cli, it's type is str, you may want to cast to something else
         # type(source_value) = str

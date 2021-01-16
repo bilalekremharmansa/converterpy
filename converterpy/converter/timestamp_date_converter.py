@@ -22,12 +22,6 @@ class TimestampToDateConverter(Converter):
             UNIT_TIMESTAMP: [UNIT_DATE]
         }
 
-    def is_convertible(self, source_unit, target_unit):
-        isinstance(source_unit, Unit)
-        isinstance(target_unit, Unit)
-
-        return source_unit == UNIT_TIMESTAMP and target_unit == UNIT_DATE
-
     def map_source_value(self, source_value):
         if isinstance(source_value, str):
             return int(source_value)
