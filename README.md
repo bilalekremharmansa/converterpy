@@ -1,6 +1,6 @@
-# convertpy
+# converterpy
 
-convertpy is designed as a customizable conversion tool to convert one thing to another.
+converterpy is designed as a customizable conversion tool to convert one thing to another.
 
 # Usage
 
@@ -30,12 +30,12 @@ There are some built-in converters to use;
 
 ### Installation
 
-```convertpy``` requires Python 3.5+ to run.
+```converterpy``` requires Python 3.5+ to run.
 
 Install with pip
 
 ```sh
-$ pip install convertpy
+$ pip install converterpy
 ```
 
 ### Custom Converters

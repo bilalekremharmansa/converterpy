@@ -17,7 +17,7 @@ from converterpy.util.import__ import import_class
 class Config(object):
 
     @staticmethod
-    def from_file(path='/etc/convertpy.json'):
+    def from_file(path='/etc/converterpy.json'):
         logger = LogManager.get_logger()
 
         configs = None

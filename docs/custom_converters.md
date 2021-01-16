@@ -4,11 +4,11 @@ Creating custom converter and integrate with command line interface is easy.
 
 ### First things first: create a module for custom converter
 
-Create a module in the path of your choice, ie: ```/opt/convertpy/custom_converters```
+Create a module in the path of your choice, ie: ```/opt/converterpy/custom_converters```
 
 ```bash
-$ mkdir /opt/convertpy/custom_converters
-$ touch /opt/convertpy/custom_converters/__init__.py
+$ mkdir /opt/converterpy/custom_converters
+$ touch /opt/converterpy/custom_converters/__init__.py
 ```
 
 ### Implementing Converter interface
@@ -76,16 +76,16 @@ class MyConverterProvider(ConverterProvider):
 
 ### Saving implementations
 
-Save this file to the folder you've just created. ```/opt/convertpy/custom_converters/number_converter_provider.py```
+Save this file to the folder you've just created. ```/opt/converterpy/custom_converters/number_converter_provider.py```
 
-### Configure convertpy to interact with custom converters
+### Configure converterpy to interact with custom converters
 
-Now, you can configure convertpy config file which is located at ```/etc/convertpy.json```. Here is an example
+Now, you can configure converterpy config file which is located at ```/etc/converterpy.json```. Here is an example
 config file;
 
 ```json
 [{
-    "base_path": "/opt/convertpy",
+    "base_path": "/opt/converterpy",
     "module_name": "custom_converters.number_converter_provider",
     "class_name": "MyConverterProvider"
 }]
@@ -94,7 +94,7 @@ config file;
 Final file structure should be like;
 
 ```bash
-convertpy
+converterpy
 └── custom_converters
     ├── __init__.py
     └── number_converter_provider.py

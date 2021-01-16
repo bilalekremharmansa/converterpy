@@ -5,13 +5,13 @@ with open("README.md", "r") as fd:
 
 setuptools.setup(
     name="converterpy",
-    version="0.0.1.dev1",
+    version="0.0.1.dev2",
     author="Bilal Ekrem Harmansa",
     author_email="bilalekremharmansa@gmail.com",
     description="customizable converter tool to convert <source> to <target>",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/bilalekremharmansa/convertpy",
+    url="https://github.com/bilalekremharmansa/converterpy",
     packages=setuptools.find_packages(),
     entry_points={
         'console_scripts': [
