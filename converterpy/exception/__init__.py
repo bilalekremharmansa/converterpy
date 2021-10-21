@@ -10,7 +10,10 @@ class UnexpectedResultException(Exception):
 
 
 class SuitableConverterNotFoundException(Exception):
-    pass
+
+    def __init__(self, msg, convertible_target_unit=None):
+        super(SuitableConverterNotFoundException, self).__init__(msg)
+        self.convertible_target_unit = convertible_target_unit
 
 
 class MultipleSuitableConverterException(Exception):

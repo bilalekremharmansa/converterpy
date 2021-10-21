@@ -46,6 +46,18 @@ class Config(object):
 
 class ConvertMain(object):
 
+    # ------
+
+    @staticmethod
+    def find_suitable_converters_to_convert(converters, source_selector, target_selector):
+        assert_list_is_instance(converters, Converter)
+        assert isinstance(source_selector, str)
+        assert isinstance(target_selector, str)
+
+        return [c for c in converters if c.is_convertible(source_selector, target_selector)]
+
+    # ------
+
     def __init__(self, logger, config):
         self.config = config
         self.logger = logger
@@ -75,18 +87,29 @@ class ConvertMain(object):
     def add_converters(self, converters):
         self.converters.extend([ConverterTextAdapter(converter) for converter in converters])
 
-    def find_suitable_converters_to_convert(self, source_selector, target_selector):
+    def find_candidate_converters_to_convert(self, source_selector):
         assert isinstance(source_selector, str)
-        assert isinstance(target_selector, str)
 
-        return [c for c in self.converters if c.is_convertible(source_selector, target_selector)]
+        return [c for c in self.converters if c.is_source_unit_supported(source_selector)]
 
     def find_converter(self, source_selector, target_selector):
-        suitable_converters = self.find_suitable_converters_to_convert(source_selector, target_selector)
+        candidate_converters = self.find_candidate_converters_to_convert(source_selector)
+        self.logger.debug("%s candidate converters found: %s" % (len(candidate_converters), candidate_converters))
+        if len(candidate_converters) == 0:
+            raise SuitableConverterNotFoundException("Suitable converter not found for for source [%s]"
+                                                     % source_selector)
 
+        suitable_converters = self.find_suitable_converters_to_convert(candidate_converters, source_selector,
+                                                                       target_selector)
+        self.logger.debug("%s suitable converters found: %s" % (len(suitable_converters), suitable_converters))
         if len(suitable_converters) == 0:
+            convertible_targets = []
+            for c in candidate_converters:
+                convertible_targets.extend(c.get_convertible_target_units(source_selector))
+
             raise SuitableConverterNotFoundException("Suitable converter not found for for source [%s] and target [%s] "
-                                                     "selectors" % (source_selector, target_selector))
+                                                     "selectors" % (source_selector, target_selector),
+                                                     convertible_targets)
         elif len(suitable_converters) > 1:
             raise MultipleSuitableConverterException("More than one converter found found for source [%s] and target "
                                                      "[%s] selectors, found: [%s]" % (source_selector, target_selector,
@@ -95,10 +118,17 @@ class ConvertMain(object):
         return suitable_converters[0]
 
     def convert(self, source_selector, source_value, target_selector):
-        converter = self.find_converter(source_selector, target_selector)
-
-        self.logger.debug('Converter [%s] is selected for conversion [%s] to [%s]' %
-                          (converter.name, source_selector, target_selector))
+        try:
+            converter = self.find_converter(source_selector, target_selector)
+            self.logger.debug('Converter [%s] is selected for conversion [%s] to [%s]' %
+                              (converter.name, source_selector, target_selector))
+        except SuitableConverterNotFoundException as e:
+            if e.convertible_target_unit:
+                return "%s\n  Convertible units from [%s] are %s" % (e, source_selector, e.convertible_target_unit)
+            else:
+                return str(e)
+        except MultipleSuitableConverterException as e:
+            return str(e)
 
         return converter.convert(source_selector, source_value, target_selector)
 
@@ -131,8 +161,13 @@ def main():
 
     # ------
     cfg = Config.from_file()
-    result_value = ConvertMain(logger, cfg).convert(source_selector, source_value, target_selector)
-    logger.out(result_value)
+    convert_main = ConvertMain(logger, cfg)
+    try:
+        result_value = convert_main.convert(source_selector, source_value, target_selector)
+        logger.out(result_value)
+    except Exception as e:
+        logger.out("Generic error occurred, see more with verbose options")
+        logger.debug("Error: %s" % e)
 
 
 if __name__ == "__main__":

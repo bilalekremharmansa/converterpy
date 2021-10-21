@@ -15,6 +15,14 @@ class ConverterTextAdapter(Converter):
         # todo should convert units to text ?
         return self.realConverter.supported_conversions()
 
+    def is_source_unit_supported(self, source_selector):
+        source_unit = ConverterTextAdapter._find_unit_by_selector(source_selector, self.supported_conversions().keys())
+        return super(ConverterTextAdapter, self).is_source_unit_supported(source_unit)
+
+    def get_convertible_target_units(self, source_selector):
+        source_unit = ConverterTextAdapter._find_unit_by_selector(source_selector, self.supported_conversions().keys())
+        return super(ConverterTextAdapter, self).get_convertible_target_units(source_unit)
+
     def is_convertible(self, source_selector, target_selector):
         assert isinstance(source_selector, str)
         assert isinstance(target_selector, str)

@@ -1,7 +1,9 @@
 from converterpy.main.convert import ConvertMain, Config
 from converterpy.provider import ConverterProvider
 from converterpy.util.logger import LogManager
+from converterpy.exception import SuitableConverterNotFoundException
 from tests.helper import NumberConverter, MockQuantityBasedConverter
+from converterpy.util.assertion import assert_with_thrown
 
 
 class TestConverterProvider(ConverterProvider):
@@ -62,6 +64,25 @@ def test_init_providers():
     assert len(main_2.converters) > 0
 
 
+def test_find_candidate_converters():
+    number_converter2 = NumberConverter()
+
+    main = create_main()
+    main.add_converters([number_converter2])
+
+    # -----
+
+    candidate_converters = main.find_candidate_converters_to_convert('seconds')
+    assert isinstance(candidate_converters, list)
+    assert len(candidate_converters) == 1
+
+    # -----
+
+    candidate_converters = main.find_candidate_converters_to_convert('int')
+    assert isinstance(candidate_converters, list)
+    assert len(candidate_converters) == 2
+
+
 def test_main_find_converter():
     main = create_main()
 
@@ -77,12 +98,33 @@ def test_main_find_converter():
     assert quantity_based_converter == quantity_based_adapter.realConverter
 
 
+def test_main_find_converter_not_matching_target_unit():
+    main = create_main()
+
+    # -----
+
+    assert_with_thrown(lambda: main.find_converter('int', 'double'),
+                       SuitableConverterNotFoundException,
+                       lambda e: e.convertible_target_unit and len(e.convertible_target_unit) > 0,
+                       "possible convertible target units should not be null")
+
+
+def test_main_find_converter_unknown_source_unit():
+    main = create_main()
+
+    # -----
+
+    assert_with_thrown(lambda: main.find_converter('hello', 'test'),
+                       SuitableConverterNotFoundException,
+                       lambda e: e.convertible_target_unit is None)
+
+
 def test_main_find_multiple_converters():
     number_converter2 = NumberConverter()
 
     main = create_main()
     main.add_converters([number_converter2])
-    suitable_converters = main.find_suitable_converters_to_convert('int', 'float')
+    suitable_converters = main.find_suitable_converters_to_convert(main.converters, 'int', 'float')
 
     assert len(suitable_converters) == 2
 
@@ -93,3 +135,9 @@ def test_main_convert():
     assert main.convert('int', 5, 'float') == 5.0
     assert main.convert('minutes', 5, 'seconds') == 300
 
+
+def test_main_convert_without_suitable_converter():
+    main = create_main()
+
+    assert 'Suitable converter not found' in main.convert('aa', 5, 'bb')
+    assert 'Convertible units from' in main.convert('seconds', 5, 'bb')

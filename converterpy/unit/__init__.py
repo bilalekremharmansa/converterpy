@@ -10,5 +10,8 @@ class Unit(object):
     def fullname(self):
         return self._fullname
 
-    def __repr__(self):
+    def __str__(self):
         return 'Unit(%s, %s)' % (self.shortname(), self.fullname())
+
+    def __repr__(self):
+        return '%s/%s' % (self.shortname(), self.fullname())

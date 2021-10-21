@@ -15,6 +15,12 @@ class Converter(object):
 
     # ----
 
+    def is_source_unit_supported(self, source_unit):
+        return source_unit in self.supported_conversions()
+
+    def get_convertible_target_units(self, source_unit):
+        return self.supported_conversions()[source_unit]
+
     def is_convertible(self, source_unit, target_unit):
         return source_unit in self.supported_conversions() and target_unit in self.supported_conversions()[source_unit]
 

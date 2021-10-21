@@ -11,5 +11,5 @@ class QuantityUnit(Unit):
     def quantity(self):
         return self._quantity
 
-    def __repr__(self):
+    def __str__(self):
         return 'QuantityUnit(%s, %s, %s)' % (self.shortname(), self.fullname(), self.quantity())
