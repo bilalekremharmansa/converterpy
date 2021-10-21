@@ -6,7 +6,7 @@ def test_init():
     converter = MockQuantityBasedConverter()
     adapter = ConverterTextAdapter(converter)
 
-    assert converter.name in adapter.name
+    assert converter.name == adapter.name
 
 
 def test_is_convertible():

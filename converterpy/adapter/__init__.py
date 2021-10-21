@@ -5,11 +5,14 @@ from converterpy.exception import ConversionNotSupportedException, UnexpectedRes
 class ConverterTextAdapter(Converter):
 
     def __init__(self, converter):
-        super(ConverterTextAdapter, self).__init__('%s adapter' % converter.name)
+        super(ConverterTextAdapter, self).__init__(converter.name)
 
         # -----
 
         self.realConverter = converter
+
+    def __repr__(self):
+        return '%s adapter' % self.realConverter.name
 
     def supported_conversions(self):
         # todo should convert units to text ?

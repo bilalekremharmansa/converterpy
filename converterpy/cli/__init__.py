@@ -6,6 +6,7 @@ class Cli(object):
     def usage(self):
         return """
 usage: convert <value> <source> to <target> [optional arguments]
+       convert list [source]                [optional arguments]
 
     optional arguments:
     -h, --help          show help message
@@ -23,7 +24,7 @@ usage: convert <value> <source> to <target> [optional arguments]
         # parse options
         for param in orig_params:
             if param in ['-h', '--help']:
-                args['help'] = True
+                args['action'] = 'help'
                 params.remove(param)
             elif param in ['-v', '--verbose']:
                 args['verbose'] = True
@@ -31,11 +32,14 @@ usage: convert <value> <source> to <target> [optional arguments]
             elif param.startswith('-'):
                 raise SyntaxError("Unexpected optional argument [%s]" % param)
 
-        if len(params) == 0:
-            args['help'] = True
-        elif len(params) < 4:
-            raise SyntaxError("Missing expression, see usage..")
+        # if action is help, should not be changed
+        if len(params) == 0 or ('action' in args and args['action'] == 'help'):
+            args['action'] = 'help'
+        elif params[0] == 'list':
+            args['action'] = 'list'
+            args['source'] = params[1] if len(params) > 1 else None
         else:
+            args['action'] = 'convert'
             args['value'] = params[0]
             args['source'] = params[1]
 
@@ -56,13 +60,14 @@ usage: convert <value> <source> to <target> [optional arguments]
         return args
 
     def validate(self, parsed_args):
-        if 'help' in parsed_args:
+        if 'help' == parsed_args['action']:
             return
 
         def _val(n):
             if n not in parsed_args:
                 raise SyntaxError("Argument [%s] is missing" % n)
 
-        _val('value')
-        _val('source')
-        _val('target')
+        if 'convert' == parsed_args['action']:
+            _val('value')
+            _val('source')
+            _val('target')

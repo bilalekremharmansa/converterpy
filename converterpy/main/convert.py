@@ -132,6 +132,42 @@ class ConvertMain(object):
 
         return converter.convert(source_selector, source_value, target_selector)
 
+    def list_conversions(self, source_selector=None):
+        conversions = dict()
+        for converter in self.converters:
+            available_conversions = converter.supported_conversions()
+            if source_selector and len(available_conversions) > 0:
+                filtered_conversions = dict()
+                for source, target in available_conversions.items():
+                    if source_selector in (source.shortname(), source.fullname()):
+                        filtered_conversions[source] = target
+
+                available_conversions = filtered_conversions
+
+            if len(available_conversions) > 0:
+                conversions[converter.name] = available_conversions
+
+        return conversions
+
+    def run(self, action, **kwargs):
+        if action == 'convert':
+            source_value = kwargs['value']
+            source_selector = kwargs['source']
+            target_selector = kwargs['target']
+
+            return self.convert(source_selector, source_value, target_selector)
+        elif action == 'list':
+            source_selector = kwargs.get('source')
+            conversions = self.list_conversions(source_selector)
+
+            list_of_conversions = ""
+            for converter_name, conversions in conversions.items():
+                list_of_conversions += "[%s]\n" % converter_name
+                for source, target in conversions.items():
+                    list_of_conversions += "  [%s] -> %s\n" % (repr(source), target)
+
+            return 'List of available conversions:\n\n%s' % list_of_conversions
+
 
 def main():
     args = sys.argv
@@ -145,7 +181,9 @@ def main():
 
     # ------
 
-    if args.get('help', False):
+    action = args.pop('action')
+
+    if action == 'help':
         logger.out(cli.usage())
         exit(0)
 
@@ -153,17 +191,14 @@ def main():
         LogManager.override_format(logger_name, LogManager.DEFAULT_LOG_FORMAT)
         LogManager.override_log_level(logger_name, logging.DEBUG)
 
-    # ------
-
-    source_value = args['value']
-    source_selector = args['source']
-    target_selector = args['target']
+    logger.debug("Parsed args: %s" % args)
 
     # ------
+
     cfg = Config.from_file()
     convert_main = ConvertMain(logger, cfg)
     try:
-        result_value = convert_main.convert(source_selector, source_value, target_selector)
+        result_value = convert_main.run(action, **args)
         logger.out(result_value)
     except Exception as e:
         logger.out("Generic error occurred, see more with verbose options")

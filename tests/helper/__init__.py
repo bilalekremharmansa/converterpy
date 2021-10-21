@@ -45,7 +45,7 @@ UNIT_FLOAT = Unit('fl', 'float')
 class NumberConverter(Converter):
 
     def __init__(self):
-        super(NumberConverter, self).__init__('number')
+        super(NumberConverter, self).__init__('Number Converter')
 
     def supported_conversions(self):
         return {

@@ -89,12 +89,12 @@ def test_main_find_converter():
     # -----
 
     number_adapter = main.find_converter('int', 'float')
-    assert number_converter.name in number_adapter.name
+    assert number_converter.name == number_adapter.name
     assert number_converter == number_adapter.realConverter
 
     # -----
     quantity_based_adapter = main.find_converter('seconds', 'minutes')
-    assert quantity_based_converter.name in quantity_based_adapter.name
+    assert quantity_based_converter.name == quantity_based_adapter.name
     assert quantity_based_converter == quantity_based_adapter.realConverter
 
 
@@ -141,3 +141,19 @@ def test_main_convert_without_suitable_converter():
 
     assert 'Suitable converter not found' in main.convert('aa', 5, 'bb')
     assert 'Convertible units from' in main.convert('seconds', 5, 'bb')
+
+
+def test_list_conversions():
+    main = create_main()
+
+    all_conversions = main.list_conversions()
+
+    assert all_conversions
+    assert isinstance(all_conversions, dict)
+    assert len(all_conversions) > 0
+
+    converter = main.converters[0]
+    assert converter.name in all_conversions
+    conversion = all_conversions[converter.name]
+    assert isinstance(conversion, dict)
+    assert len(conversion) > 0
