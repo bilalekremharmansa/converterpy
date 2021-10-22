@@ -5,7 +5,7 @@ with open("README.md", "r") as fd:
 
 setuptools.setup(
     name="converterpy",
-    version="0.0.1.dev3",
+    version="0.0.2",
     author="Bilal Ekrem Harmansa",
     author_email="bilalekremharmansa@gmail.com",
     description="customizable converter tool to convert <source> to <target>",

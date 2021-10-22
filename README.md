@@ -6,6 +6,8 @@ converterpy is designed as a customizable conversion tool to convert one thing t
 
 ```bash
 usage: convert <value> <source> to <target> [optional arguments]
+       convert list [source]                [optional arguments]
+
 
     optional arguments:
     -h, --help          show help message
