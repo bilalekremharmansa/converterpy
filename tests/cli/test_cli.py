@@ -1,54 +1,45 @@
+from converterpy.util.assertion import assert_with_thrown
+
 from converterpy.util.logger import LogManager
 from converterpy.cli import Cli
 
 logger = LogManager.get_logger()
 
 
-def test_cli_usage():
-    cli = Cli(logger)
-
-    assert cli.usage() is not None
-    assert cli.usage() != ''
-
-
 def test_cli_convert():
-    cli = Cli(logger)
+    cli = Cli('10 seconds to minutes'.split())
 
-    args = cli.parse('10 seconds to minutes'.split())
-    assert args['action'] == 'convert'
-    assert args['source'] == 'seconds'
-    assert args['value'] == '10'
-    assert args['target'] == 'minutes'
+    assert cli.action == 'convert'
+    assert cli.source == 'seconds'
+    assert cli.value == '10'
+    assert cli.target == 'minutes'
 
     # ------
 
-    args = cli.parse('10 sec to minn'.split())
-    assert args['action'] == 'convert'
-    assert args['source'] == 'sec'
-    assert args['value'] == '10'
-    assert args['target'] == 'minn'
+    cli = Cli('10 sec to minn'.split())
+    assert cli.action == 'convert'
+    assert cli.source == 'sec'
+    assert cli.value == '10'
+    assert cli.target == 'minn'
 
 
 def test_cli_list():
-    cli = Cli(logger)
+    cli = Cli('list'.split())
 
-    args = cli.parse('list'.split())
-    assert args['action'] == 'list'
-    assert args['source'] is None
+    assert cli.action == 'list'
+    assert cli.source is None
 
     # ------
 
-    args = cli.parse('list seconds'.split())
-    assert args['action'] == 'list'
-    assert args['source'] == 'seconds'
+    cli = Cli('list seconds'.split())
+    assert cli.action == 'list'
+    assert cli.source == 'seconds'
 
 
 def test_cli_help():
-    cli = Cli(logger)
-
+    # docopt lib calls system.exit(), if --help is provided
     def _assert(statement):
-        args = cli.parse(statement.split())
-        assert args['action'] == 'help'
+        assert_with_thrown(lambda: Cli(statement.split()), SystemExit, lambda _: True)
 
     # ------
 
@@ -61,11 +52,9 @@ def test_cli_help():
 
 
 def test_cli_verbose():
-    cli = Cli(logger)
-
     def _assert(statement):
-        args = cli.parse(statement.split())
-        assert args['verbose']
+        cli = Cli(statement.split())
+        assert cli.verbose
 
     # ------
 
@@ -77,12 +66,9 @@ def test_cli_verbose():
 
 # multiple optional arg test
 def test_cli_help_and_verbose():
-    cli = Cli(logger)
-
+    # docopt lib calls system.exit(), if --help is provided
     def _assert(statement):
-        args = cli.parse(statement.split(' '))
-        assert args['action'] == 'help'
-        assert args['verbose']
+        assert_with_thrown(lambda: Cli(statement.split()), SystemExit, lambda _: True)
 
     # ------
 

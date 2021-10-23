@@ -5,13 +5,16 @@ converterpy is designed as a customizable conversion tool to convert one thing t
 # Usage
 
 ```bash
-usage: convert <value> <source> to <target> [optional arguments]
-       convert list [source]                [optional arguments]
+Usage:
+  convert <value> <source> to <target> [-v|--verbose]
+  convert <source> to <target> <value> [-v|--verbose]
+  convert list [<source>] [-v|--verbose]
+  convert --version
 
-
-    optional arguments:
-    -h, --help          show help message
-    -v                  verbose mode
+Options:
+  -h --help        Show usage.
+  -v --verbose     Enable verbose mode for debugging.
+  --version        Show version.
 ```
 
 #### Examples

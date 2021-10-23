@@ -149,15 +149,14 @@ class ConvertMain(object):
 
         return conversions
 
-    def run(self, action, **kwargs):
-        if action == 'convert':
-            source_value = kwargs['value']
-            source_selector = kwargs['source']
-            target_selector = kwargs['target']
-
+    def run(self, cli):
+        if cli.action == 'convert':
+            source_value = cli.value
+            source_selector = cli.source
+            target_selector = cli.target
             return self.convert(source_selector, source_value, target_selector)
-        elif action == 'list':
-            source_selector = kwargs.get('source')
+        elif cli.action == 'list':
+            source_selector = cli.source
             conversions = self.list_conversions(source_selector)
 
             list_of_conversions = ""
@@ -170,35 +169,26 @@ class ConvertMain(object):
 
 
 def main():
-    args = sys.argv
-
     # be initializer of logger to set log_format
     logger_name = LogManager.DEFAULT_LOGGER_NAME
     logger = LogManager.create_logger(name=logger_name, level=LEVEL_OUT, log_format='%(message)s')
 
-    cli = Cli(logger)
-    args = cli.parse(args[1:])
+    cli = Cli(sys.argv[1:])
 
     # ------
 
-    action = args.pop('action')
-
-    if action == 'help':
-        logger.out(cli.usage())
-        exit(0)
-
-    if args.get('verbose', False):
+    if cli.verbose:
         LogManager.override_format(logger_name, LogManager.DEFAULT_LOG_FORMAT)
         LogManager.override_log_level(logger_name, logging.DEBUG)
 
-    logger.debug("Parsed args: %s" % args)
+    logger.debug("Parsed args: %s" % cli.__dict__)
 
     # ------
 
     cfg = Config.from_file()
     convert_main = ConvertMain(logger, cfg)
     try:
-        result_value = convert_main.run(action, **args)
+        result_value = convert_main.run(cli)
         logger.out(result_value)
     except Exception as e:
         logger.out("Generic error occurred, see more with verbose options")

@@ -1,11 +1,13 @@
 import setuptools
 
+from converterpy.version import VERSION
+
 with open("README.md", "r") as fd:
     long_description = fd.read()
 
 setuptools.setup(
     name="converterpy",
-    version="0.0.2",
+    version=VERSION,
     author="Bilal Ekrem Harmansa",
     author_email="bilalekremharmansa@gmail.com",
     description="customizable converter tool to convert <source> to <target>",
@@ -22,6 +24,9 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+    ],
+    install_requires=[
+        "docopt"
     ],
     python_requires='>=3.5',
 )
